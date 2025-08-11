@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+   <title>一个页面</title>
+    <style>
+     body {
+            font-family: "Microsoft YaHei", sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .url {
+            color: #666;
+            margin: 10px 0;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .copy-btn {
+            padding: 8px 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1 1 40%;
+        }
+        .copy-btn:hover {
+            background: #45a049;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #666;
+        }
+        .social-link {
+            color: #2196F3;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 保持原有HTML结构不变 -->
+    <div class="header">
+        <h2>测试网页！</h2>
+        <div class="url">文字0</div>
+    </div>
+
+    <p>这一页测试使用execCommand方法复制文字。</p>
+
+    <div class="button-group">
+        <button class="copy-btn" data-text="固定文本1">1</button>
+        <button class="copy-btn" data-text="固定文本2">2</button>
+        <button class="copy-btn" data-text="固定文本3">3</button>
+        <button class="copy-btn" data-text="固定文本4">4</button>
+        <button class="copy-btn" id="random-btn">复制文案</button>
+    </div>
+
+    <div class="footer">
+        <p>文字1<br>文字2</p>
+        <a href="#" class="social-link">我的微博</a>
+    </div>
+
+    <script>
+        // 添加文本库
+        const textLibrary = [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+        ];
+
+        document.querySelectorAll('.copy-btn').forEach((btn, index) => {
+            btn.addEventListener('click', function() {
+                let text;
+                
+                // 判断是否是第五个按钮（索引4）
+                if(index === 4) {
+                    // 从文本库随机选择
+                    text = textLibrary[Math.floor(Math.random() * textLibrary.length)];
+                } else {
+                    // 其他按钮保持原有逻辑
+                    text = this.dataset.text;
+                }
+
+                // 保持原有复制逻辑
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                
+                alert('已复制: ' + text);
+            });
+        });
+    </script>
+</body>
+</html>
